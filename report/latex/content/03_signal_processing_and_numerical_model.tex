@@ -1,4 +1,4 @@
-﻿\section{SP-G0 --- Signal-Processing Contract Freeze}
+\section{SP-G0 --- Signal-Processing Contract Freeze}
 \label{sec:sp-g0}
 
 \subsection{Purpose}
@@ -85,46 +85,297 @@ project scope and therefore do not require reinvention:
     they become the formal signal-processing contract.
 \end{itemize}
 
-\subsection{Conventions That Remain Open}
+\subsection{Canonical ULA and Steering Contract}
 
-The following items shall not be guessed.
+The SP-G0 source audit showed that the predecessor HLS implementation
+provides direct evidence for the SCM arithmetic and deterministic vector, but
+does not independently define every physical array-manifold convention needed
+by this project.
 
-They must be extracted from the authoritative existing Python and HLS
-implementations, reconciled where necessary, and explicitly recorded before
-SP-G0 can close:
+The remaining physical conventions are therefore frozen explicitly for this
+repository.
 
-\begin{enumerate}
-    \item exact ULA element spacing;
+The canonical baseline is an eight-element uniform linear array with
+wavelength-normalized sensor coordinates
 
-    \item sensor-coordinate definition and coordinate origin;
+\[
+\xi_n
+=
+\frac{x_n}{\lambda}
+=
+\frac{n}{2},
+\qquad
+n=0,\ldots,7.
+\]
 
-    \item sensor indexing convention;
+Thus,
 
-    \item angular reference convention, including whether angle is measured
-    from broadside or endfire;
+\[
+\frac{d}{\lambda}=0.5.
+\]
 
-    \item steering-vector trigonometric convention, including the use of
-    $\sin(\theta)$ or $\cos(\theta)$;
+The canonical array axis is \(+x\). The one-parameter visible sector is
 
-    \item complex exponential sign convention used by the steering vector;
+\[
+-90^\circ
+\leq
+\theta
+\leq
++90^\circ,
+\]
 
-    \item treatment of the sample mean before covariance formation;
+with
 
-    \item exact deterministic reference scenario, including source angle,
-    source amplitude, phase, and noise assumptions;
+\[
+\theta=0
+\]
 
-    \item random-seed policy for regression cases;
+defined as broadside and positive \(\theta\) rotating toward \(+x\).
 
-    \item complex sample ordering used by the software reference;
+For the receive-manifold derivation, the project adopts the temporal phasor
+convention
 
-    \item frame traversal order across sensor and snapshot dimensions;
+\[
+\exp(-j\omega t).
+\]
 
-    \item real/imaginary ordering used when data are later packed for the
-    hardware interface.
-\end{enumerate}
+The canonical receive steering coefficient is
 
-No downstream gate may silently introduce its own alternative convention.
+\[
+a_n(\theta)
+=
+\exp\!\left[
+-j\,2\pi\,\xi_n\sin\theta
+\right].
+\]
 
+Equivalently,
+
+\[
+a_n(\theta)
+=
+\exp\!\left[
+-jk(x_n-x_{\mathrm{ref}})\sin\theta
+\right].
+\]
+
+For the baseline golden case,
+
+\[
+x_{\mathrm{ref}}=x_0=0.
+\]
+
+This first-sensor phase reference is a deliberate project decision and shall
+not be silently replaced by another reference convention in downstream
+software or hardware.
+
+\subsection{Deterministic Golden Reference Case}
+
+The canonical deterministic SP-G0 case is
+
+\[
+N=8,
+\qquad
+M=128,
+\qquad
+\theta=+30^\circ,
+\]
+
+with unit source amplitude, zero source phase, and no additive noise.
+
+The source waveform is
+
+\[
+s[m]=1+j0,
+\qquad
+m=0,\ldots,127.
+\]
+
+Therefore,
+
+\[
+\mathbf X[:,m]
+=
+\mathbf a(30^\circ)
+\]
+
+for every snapshot.
+
+Because
+
+\[
+\frac{d}{\lambda}=0.5
+\]
+
+and
+
+\[
+\sin 30^\circ=\frac{1}{2},
+\]
+
+the steering coefficient becomes
+
+\[
+a_n
+=
+\exp\!\left(-j\frac{\pi n}{2}\right),
+\]
+
+which gives
+
+\[
+\mathbf a
+=
+\begin{bmatrix}
+1 &
+-j &
+-1 &
++j &
+1 &
+-j &
+-1 &
++j
+\end{bmatrix}^{\mathsf T}.
+\]
+
+This vector exactly reproduces the deterministic vector used by the
+predecessor HLS testbench.
+
+Because all \(M\) snapshots are identical,
+
+\[
+\mathbf X
+=
+\mathbf a\,\mathbf 1_M^{\mathsf T},
+\]
+
+and the resulting deterministic golden SCM is
+
+\[
+\widehat{\mathbf R}
+=
+\frac{1}{M}
+\mathbf X\mathbf X^{\mathsf H}
+=
+\mathbf a\mathbf a^{\mathsf H}.
+\]
+
+Consequently,
+
+\[
+\widehat R_{ii}=1
+\]
+
+and
+
+\[
+\widehat{\mathbf R}
+=
+\widehat{\mathbf R}^{\mathsf H}.
+\]
+
+This analytic matrix becomes an independent structural reference for the
+later floating-point golden implementation.
+
+\subsection{Mean-Treatment Contract}
+
+The predecessor HLS operation performs no sample-mean subtraction.
+
+The canonical operation is therefore
+
+\[
+\widehat{\mathbf R}
+=
+\frac{1}{M}
+\mathbf X\mathbf X^{\mathsf H}.
+\]
+
+In strict statistical terminology this is an uncentered sample second-moment
+matrix when the sample mean is nonzero.
+
+The project uses the conventional array-processing term sample covariance
+matrix (SCM) for this operation, while explicitly preserving the fact that no
+mean-centering is performed.
+
+A mean-centered estimator shall not silently replace this baseline operation.
+
+\subsection{Regression and Logical-Interface Contract}
+
+Randomized regression shall use the explicit NumPy Generator API with
+
+\[
+\texttt{PCG64}
+\]
+
+and root seed
+
+\[
+0.
+\]
+
+Independent randomized cases shall use deterministic
+\texttt{SeedSequence}-derived substreams rather than implicit global random
+state.
+
+The logical input sample is
+
+\[
+X[n,m],
+\]
+
+where \(n\) is the sensor/channel index and \(m\) is the snapshot index.
+
+Thus,
+
+\[
+\mathbf X\in\mathbb C^{8\times128}
+\]
+
+with sensors as rows and snapshots as columns.
+
+This definition freezes the signal-processing frame semantics only.
+
+Physical AXI serialization, including real/imaginary packing, byte order,
+word width, sign extension, stream traversal, DMA framing, and TLAST
+behavior, belongs to INT-G0.
+
+\subsection{Evidence Classification and Convention Conflict}
+
+SP-G0 distinguishes four evidence classes:
+
+\begin{itemize}
+    \item \textbf{Source evidence}: behavior explicitly present in the
+    predecessor controlled implementation;
+
+    \item \textbf{Derived consistency check}: a mathematical consequence
+    shown to be compatible with source evidence;
+
+    \item \textbf{Cross-project precedent}: a convention established in
+    another controlled project but not automatically authoritative here;
+
+    \item \textbf{New project decision}: a convention explicitly selected
+    where predecessor evidence was insufficient.
+\end{itemize}
+
+This distinction is necessary because historical software exists with both
+positive- and negative-sign spatial exponential conventions.
+
+For this repository, the authoritative receive steering convention is
+
+\[
+a_n(\theta)
+=
+\exp\!\left[
+-j\,2\pi\,\xi_n\sin\theta
+\right].
+\]
+
+Historical positive-sign implementations are not declared universally
+incorrect in isolation, because steering sign depends on the complete
+temporal-phasor, direction, and receive-model convention.
+
+They are, however, non-canonical for this repository unless an explicit
+convention-adaptation and verification step is performed.
 \subsection{Covariance Definition}
 
 For the approved frame
@@ -237,47 +488,67 @@ is associated with finite-word-length numerical behavior.
 
 These quantities shall not be presented as the same error source.
 
-\subsection{Required SP-G0 Evidence}
+\subsection{SP-G0 Evidence Closure}
 
-SP-G0 closure shall require traceable evidence showing that:
+SP-G0 produced traceable evidence for:
 
 \begin{enumerate}
-    \item the authoritative existing reference implementation has been
-    inspected;
+    \item predecessor HLS matrix dimensions and indexing;
 
-    \item array geometry and steering conventions have been extracted;
+    \item covariance normalization and conjugation behavior;
 
-    \item snapshot dimensions and ordering have been verified;
+    \item absence of sample-mean subtraction;
 
-    \item covariance normalization has been verified;
+    \item the predecessor deterministic steering vector;
 
-    \item complex conjugation behavior has been verified;
+    \item mathematical consistency of that vector with the adopted
+    half-wavelength ULA and steering convention;
 
-    \item deterministic reference-case parameters have been frozen;
+    \item explicit resolution of the historical steering-sign conflict;
 
-    \item random regression policy has been frozen;
+    \item the canonical deterministic source and noise assumptions;
 
-    \item unresolved inconsistencies, if any, have been explicitly recorded
-    rather than silently reconciled.
+    \item the controlled randomized-regression policy;
+
+    \item the boundary between logical signal-frame semantics and future AXI
+    transport semantics.
 \end{enumerate}
 
+Evidence provenance is recorded in the SP-G0 detailed gate record and its
+companion canonical-convention decision record.
 \subsection{Acceptance Criteria}
 
-SP-G0 may be marked PASS only when:
+SP-G0 may be marked PASS only when all of the following are satisfied:
 
 \begin{enumerate}
-    \item all open conventions listed above are resolved from authoritative
-    implementation evidence;
+    \item \(N\), \(M\), and logical \(\mathbf X\) indexing are frozen;
 
-    \item the resulting contract is recorded in the repository;
+    \item covariance normalization and complex conjugation are frozen;
 
-    \item no conflicting convention remains between the approved software and
-    hardware reference paths;
+    \item mean treatment is explicit;
 
-    \item SP-G1 can generate its canonical array snapshot case without making
-    any additional undocumented convention choice.
+    \item ULA spacing and normalized sensor coordinates are explicit;
+
+    \item angular reference and positive-angle direction are explicit;
+
+    \item the steering trigonometric convention is explicit;
+
+    \item the steering exponential sign is explicit;
+
+    \item deterministic reference-case semantics are explicit;
+
+    \item randomized regression policy is explicit;
+
+    \item the SP-G0 versus INT-G0 responsibility boundary is explicit;
+
+    \item historical convention conflicts are documented rather than hidden;
+
+    \item SP-G1 can generate the canonical test case without making an
+    undocumented convention choice.
 \end{enumerate}
 
+The detailed pre-closure audit shall evaluate these criteria before the gate
+status changes to PASS.
 \subsection{Engineering Interpretation}
 
 SP-G0 is deliberately treated as an engineering gate rather than as a
@@ -294,10 +565,19 @@ localized.
 
 \subsection{Gate Status}
 
-\textbf{Status: ACTIVE.}
+\textbf{Status: PASS.}
 
-Several high-level baseline properties are already frozen, but the detailed
-array, steering, deterministic-case, and data-ordering conventions still
-require audit against the authoritative existing implementation.
+SP-G0 is closed.
 
-SP-G1 shall not begin until SP-G0 reaches PASS.
+The source audit and explicit project-decision process resolved the geometry,
+steering, deterministic-case, mean-treatment, logical-frame, and randomized
+regression conventions required by the project.
+
+All twelve SP-G0 acceptance criteria passed. Repository diff hygiene, report
+alignment, and the complete LaTeX smoke build also passed.
+
+The authoritative Gate Registry and continuation handoff have been
+synchronized with this closure.
+
+SP-G1 remains PENDING and is the next permitted signal-processing gate after
+this SP-G0 closure is integrated into the main branch.

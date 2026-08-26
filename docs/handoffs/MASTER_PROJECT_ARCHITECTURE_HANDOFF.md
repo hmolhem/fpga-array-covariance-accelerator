@@ -202,7 +202,7 @@ Writing documentation alone is not gate closure.
 
 ### Signal Processing
 
-    SP-G0   Signal-Processing Contract Freeze       ACTIVE
+    SP-G0   Signal-Processing Contract Freeze       PASS
     SP-G1   Array Signal and Snapshot Model         PENDING
     SP-G2   Floating-Point SCM Golden Reference     PENDING
     SP-G3   Statistical vs Numerical Error          PENDING
@@ -505,46 +505,78 @@ Large PRs containing unrelated gates shall be avoided.
 
 ## 18. Current Repository State
 
-At the time of this handoff:
+At the SP-G0 closure checkpoint:
 
-- repository has been created as a private GitHub repository;
-- `main` contains the initial repository commit;
-- development is occurring on `chore/repository-foundation`;
-- project charter has been established;
-- gate registry has been established;
-- repository structure has been established;
-- pull-request governance has been established;
+- PR #1 — repository foundation and governance — is merged;
+- PR #2 — SYS-G1 architecture / evidence contract closure — is merged;
+- PR #3 is the focused SP-G0 signal-processing contract closure;
+- the active PR #3 branch is
+  `docs/sp-g0-signal-processing-contract`;
 - SYS-G0 is `PASS`;
 - SYS-G1 is `PASS`;
-- SP-G0 is `ACTIVE`;
-- later gates remain `PENDING`;
-- no new signal-processing or FPGA implementation shall begin during repository
-  foundation work.
+- SP-G0 is `PASS`;
+- SP-G1 remains `PENDING`;
+- all twelve SP-G0 acceptance criteria passed;
+- the canonical signal-processing conventions are frozen;
+- report alignment passed;
+- the complete LaTeX smoke build passed;
+- no SP-G1 implementation is included in PR #3.
+
+The SP-G0 closure package freezes the authoritative baseline for:
+
+- N = 8 sensors;
+- M = 128 snapshots;
+- logical X[n,m] indexing;
+- uncentered SCM formation using (1/M) X X^H;
+- complex conjugation behavior;
+- d/lambda = 0.5 ULA geometry;
+- broadside-referenced angular convention;
+- sin(theta) spatial projection;
+- negative-sign receive steering convention;
+- deterministic theta = +30 deg reference case;
+- source amplitude, phase, and noise assumptions;
+- controlled randomized-regression policy;
+- separation between logical signal semantics and future AXI transport
+  semantics.
+
+The next implementation work shall occur only after PR #3 is merged into
+`main`.
 
 ---
 
 ## 19. Immediate Next Action
 
-Do not begin SP-G1.
+Do not begin SP-G1 inside PR #3.
 
-The permitted sequence is:
+The permitted continuation sequence is:
 
-    Complete PR #2
+    Complete final SP-G0 consistency audit
         |
         v
-    Merge SYS-G1 architecture / evidence contract closure
+    Commit focused SP-G0 closure package
         |
         v
-    Resume and close SP-G0
+    Open and review PR #3
         |
         v
-    Begin SP-G1
+    Merge SP-G0 closure into main
+        |
+        v
+    Verify clean main / origin-main synchronization
+        |
+        v
+    Create focused SP-G1 development branch
+        |
+        v
+    Begin SP-G1 — Array Signal and Snapshot Model
 
-The open SP-G0 conventions must be extracted from the authoritative existing reference
-implementation rather than guessed.
+SP-G1 shall consume the SP-G0 contract.
+
+SP-G1 shall not redefine the frozen geometry, steering, indexing, covariance,
+deterministic-case, random-regression, or logical-frame conventions unless a
+future explicit engineering decision formally revises the contract.
 
 ---
-
 ## 20. Handoff Principle
 
 This handoff captures project state for continuation.
@@ -556,5 +588,3 @@ When project state changes:
 - handoffs shall summarize, not redefine, the engineering truth.
 
 The repository itself remains the persistent source of truth.
-
-
