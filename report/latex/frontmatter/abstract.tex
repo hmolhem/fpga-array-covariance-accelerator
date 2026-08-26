@@ -1,0 +1,16 @@
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+This report defines and will document an EE 6800 engineering project on fixed-point
+implementation of an array-processing sample covariance matrix front end using the
+PYNQ-Z2 Zynq-7000 SoC. The verified starting point is an eight-sensor, 128-snapshot
+floating-point SCM kernel with prior HLS verification. The semester work is structured as a
+controlled evidence chain spanning signal-processing contracts, floating-point and
+bit-accurate references, fixed-point numerical design, HLS architecture, C/RTL
+co-simulation, Vivado timing/resource characterization, AXI DMA integration, PYNQ-Z2
+board verification, and downstream software DOA consistency. The report uses explicit
+system, signal-processing, FPGA, integration, end-to-end, and release gates. Sections that
+have not yet produced evidence are retained as PENDING; no numerical or hardware
+performance is claimed before its corresponding gate is closed. A dedicated engineering
+interpretation chapter converts numerical accuracy, resource use, latency, throughput,
+timing closure, and interface behavior into defensible design decisions.

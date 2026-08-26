@@ -1,0 +1,43 @@
+\chapter{Engineering Interpretation and Trade Study}
+\label{ch:engineering-interpretation}
+\textbf{Chapter status: PENDING RESULTS; interpretation questions frozen.}
+
+This chapter is mandatory. It does not repeat the result tables; it explains why the observed
+behavior occurred and what engineering decisions follow.
+
+\section{Numerical Accuracy versus Word Length}
+Interpret the relationship among quantization step, covariance error, structural preservation,
+and downstream DOA consistency.
+
+\section{Accuracy versus FPGA Resources}
+Compare numerical benefit against DSP, LUT, FF, BRAM, and routing cost. The preferred
+format shall be defended, not merely reported.
+
+\section{Latency versus Throughput}
+Latency and initiation interval/throughput shall be discussed separately. A design with lower
+latency is not automatically the design with higher sustained frame throughput.
+
+\section{Pipeline and Unroll Interpretation}
+For each pragma or architecture change, explain the causal chain from dependency/memory
+access to II/latency and resource usage.
+
+\section{Timing Closure Interpretation}
+Report requested clock, achieved timing, WNS, critical path, evaluated mitigation, and final
+decision. A missed target is an engineering result, not a reason to hide the run.
+
+\section{Integration Interpretation}
+Separate numerical discrepancies from packing/order/interface faults using the bit-accurate
+reference hierarchy.
+
+\section{End-to-End Engineering Question}
+The final trade study shall answer:
+\begin{equation}
+\boxed{\text{What FPGA implementation cost is required to preserve useful DOA fidelity?}}
+\end{equation}
+The answer must be bounded by the actual EE 6800 baseline and must not imply full radar or
+full MUSIC hardware acceleration.
+
+\section{E2E-G2 --- Engineering Interpretation Gate}
+\textbf{Exit criterion.} Major numerical, architecture, timing, resource, and integration
+results have causal explanations and explicit design decisions.\\
+\textbf{Status.} PENDING.

@@ -1,0 +1,121 @@
+% =========================================================
+% main.tex
+% Reusable Engineering Report Template
+% =========================================================
+%
+% USER WORKFLOW
+% -------------
+% 1. Edit report metadata in setup/00_metadata.tex.
+% 2. Replace the objective and abstract in frontmatter/.
+% 3. Register report sections in content/00_report_body.tex.
+% 4. Register appendices in appendices/00_appendices.tex.
+% 5. Compile main.tex with pdfLaTeX and Biber.
+%
+% This file is intentionally limited to document assembly and should
+% normally remain unchanged between projects.
+% =========================================================
+
+% For technical reports, oneside/openany avoids unintended blank pages.
+\documentclass[12pt, a4paper, oneside, openany]{report}
+
+% =========================================================
+% 1. User-editable metadata
+% =========================================================
+% All report identity, title-page fields, headers, logo controls,
+% and PDF properties are centralized in one configuration file.
+\input{setup/00_metadata}
+
+% =========================================================
+% 2. Shared setup modules
+% =========================================================
+% These files control packages, page layout, mathematical notation,
+% code styles, reusable environments, and visual styling.
+\input{setup/01_packages}
+\input{setup/02_layout}
+\input{setup/03_math_macros}
+\input{setup/04_code_styles}
+\input{setup/05_environments}
+\input{setup/06_advanced_math}
+\input{setup/07_DSP_Radar_macros}
+\input{setup/08_theme}
+
+% =========================================================
+% 3. PDF metadata
+% =========================================================
+% Values are defined in setup/00_metadata.tex. Keep the plain title
+% free of line-break and typography commands.
+\hypersetup{
+    pdftitle={\reporttitleplain},
+    pdfauthor={\studentname},
+    pdfsubject={\pdfsubjecttext},
+    pdfkeywords={\pdfkeywordstext}
+}
+
+% =========================================================
+% 4. Bibliography database
+% =========================================================
+\addbibresource{references.bib}
+
+% =========================================================
+% 5. Document assembly
+% =========================================================
+\begin{document}
+
+% ---------------------------------------------------------
+% Cover page
+% ---------------------------------------------------------
+% The title page has no running header or footer. PDF page anchors are
+% temporarily disabled so Arabic numbering can restart later without a
+% duplicate page.1 destination warning.
+\hypersetup{pageanchor=false}
+\input{frontmatter/titlepage}
+\hypersetup{pageanchor=true}
+
+% ---------------------------------------------------------
+% Front matter
+% ---------------------------------------------------------
+% Roman numbering is used for the objective, abstract, contents,
+% list of figures, and list of tables.
+\clearpage
+\pagenumbering{roman}
+\setcounter{page}{1}
+\pagestyle{fancy}
+
+\input{frontmatter/objective}
+\clearpage
+\input{frontmatter/abstract}
+
+\clearpage
+\tableofcontents
+
+\clearpage
+\listoffigures
+
+\clearpage
+\listoftables
+
+% ---------------------------------------------------------
+% Main report body
+% ---------------------------------------------------------
+% Add, remove, or reorder chapters and sections only through the
+% centralized content menu unless a project requires a special layout.
+\clearpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+\pagestyle{fancy}
+\input{content/00_report_body}
+
+% ---------------------------------------------------------
+% Appendices
+% ---------------------------------------------------------
+% Comment the next two lines when a report has no appendices.
+\appendix
+\input{appendices/00_appendices}
+
+% ---------------------------------------------------------
+% References
+% ---------------------------------------------------------
+\clearpage
+\printbibliography[heading=bibintoc, title={References}]
+
+\end{document}

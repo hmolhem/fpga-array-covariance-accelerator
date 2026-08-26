@@ -1,0 +1,136 @@
+﻿# ============================================================
+# fpga-array-covariance-accelerator
+# Repository ignore policy
+#
+# Principle:
+# Track source, configuration, verification evidence, and
+# reproducibility assets. Do not track generated build products.
+# ============================================================
+
+# ------------------------------------------------------------
+# Operating system / editor
+# ------------------------------------------------------------
+.DS_Store
+Thumbs.db
+Desktop.ini
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ------------------------------------------------------------
+# Python
+# ------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*.pyd
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Python packaging
+build/
+dist/
+*.egg-info/
+
+# ------------------------------------------------------------
+# MATLAB / temporary numerical files
+# ------------------------------------------------------------
+*.asv
+*.m~
+*.mat.tmp
+
+# ------------------------------------------------------------
+# Vitis HLS / Vivado HLS generated artifacts
+# ------------------------------------------------------------
+.Xil/
+*.jou
+*.log
+*.str
+*.pb
+*.wdb
+*.wcfg
+*.dcp
+
+# Common HLS generated project/solution directories
+hls/**/solution*/
+hls/**/.autopilot/
+hls/**/.Xil/
+hls/**/csim/
+hls/**/csim.exe
+hls/**/csynth/
+hls/**/cosim/
+hls/**/impl/
+hls/**/syn/
+hls/**/sim/
+hls/**/report/
+
+# ------------------------------------------------------------
+# Vivado generated artifacts
+# ------------------------------------------------------------
+*.cache/
+*.gen/
+*.runs/
+*.sim/
+*.hw/
+*.ip_user_files/
+*.xpr
+*.ltx
+
+# Generated bitstreams / hardware handoff artifacts
+# Final approved release artifacts may later be versioned
+# explicitly under a controlled release/evidence directory.
+*.bit
+*.bin
+*.hwh
+
+# ------------------------------------------------------------
+# PYNQ / Jupyter runtime artifacts
+# ------------------------------------------------------------
+pynq/**/.ipynb_checkpoints/
+*.npy.tmp
+*.npz.tmp
+
+# ------------------------------------------------------------
+# LaTeX build artifacts
+# ------------------------------------------------------------
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.lot
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.xdv
+
+# Generated report output
+report/generated/*
+
+# ------------------------------------------------------------
+# Temporary / scratch data
+# ------------------------------------------------------------
+tmp/
+temp/
+scratch/
+*.tmp
+
+# ------------------------------------------------------------
+# Large/generated experiment outputs
+# ------------------------------------------------------------
+results/generated/
+verification/generated/

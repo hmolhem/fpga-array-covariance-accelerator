@@ -1,0 +1,35 @@
+\chapter{Verification, Experimental Results, and Evidence}
+\label{ch:verification-results}
+\textbf{Chapter status: PENDING RESULTS; verification plan frozen.}
+
+\section{Core Verification Matrix}
+\begin{table}[H]
+\centering
+\caption{Planned verification matrix. Evidence locations will be linked to repository run IDs and PRs.}
+\begin{tabularx}{\textwidth}{@{}p{0.12\textwidth}p{0.18\textwidth}p{0.20\textwidth}X p{0.13\textwidth}@{}}
+\toprule
+\textbf{Test} & \textbf{Domain} & \textbf{Reference} & \textbf{Primary metric/evidence} & \textbf{Status}\\
+\midrule
+V-01 & Software SCM & Independent FP reference & Matrix agreement on deterministic/common vectors & PENDING\\
+V-02 & Numerical & Floating point & Fixed-point covariance error, overflow/saturation & PENDING\\
+V-03 & Structure & SCM theory & Hermitian residual, diagonal consistency, PSD diagnostic & PENDING\\
+V-04 & HLS/RTL & Bit-accurate model & C simulation and C/RTL agreement & PENDING\\
+V-05 & Interface & Known integer pattern & Exact stream ordering, sign, frame, TLAST & PENDING\\
+V-06 & Board & Bit-accurate golden & Returned covariance matrix comparison & PENDING\\
+V-07 & Application & Floating-point DOA & Fixed-point/board DOA difference & PENDING\\
+V-08 & Performance & Traceable timing sources & HLS cycles, implementation timing, host timing kept separate & PENDING\\
+V-09 & Reproducibility & Frozen manifest & Fresh-checkout core run & PENDING\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Result Reporting Rule}
+No table or figure will be promoted to a project claim without a generating script/run ID or a
+documented tool report. Negative results and failed conditions remain part of the engineering
+record.
+
+\section{E2E-G0 --- Board Covariance to Software DOA}
+\textbf{Status.} PENDING.
+
+\section{E2E-G1 --- Performance Characterization}
+\textbf{Status.} PENDING.

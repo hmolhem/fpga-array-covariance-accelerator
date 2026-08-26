@@ -1,0 +1,43 @@
+\chapter{HLS and FPGA Architecture}
+\label{ch:hls-fpga}
+\textbf{Chapter status: PENDING IMPLEMENTATION EVIDENCE.}
+
+\section{FPGA Processing Responsibility}
+Programmable logic computes SCM formation only. Host-side eigendecomposition and DOA
+estimation are intentionally outside the baseline PL boundary.
+
+\section{SCM Computational Architecture}
+Pending: loop nest, data access, matrix symmetry strategy, buffering, and complex MAC
+architecture.
+
+\section{Complex Multiply-Accumulate Datapath}
+Pending: mapping of $(a+jb)(c-jd)=(ac+bd)+j(bc-ad)$ into selected fixed-point operators,
+DSP resources, and accumulator structure.
+
+\section{Pipeline and Unroll Decisions}
+Pending: evidence-based pragma/architecture decisions. Every optimization must state the
+expected effect on initiation interval, latency, and resources before results are interpreted.
+
+\section{FPGA-G1 --- Fixed-Point C++ Model}
+\textbf{Exit criterion.} Bit-accurate model agrees with the approved numerical contract.\\
+\textbf{Status.} PENDING.
+
+\section{FPGA-G2 --- HLS C Simulation}
+\textbf{Exit criterion.} Common vectors pass functional and numerical tests.\\
+\textbf{Status.} PENDING.
+
+\section{FPGA-G3 --- Synthesis and Architecture Characterization}
+Required evidence: cycle latency, frame interval/II, requested clock, estimated clock,
+DSP, LUT, FF, BRAM, and dominant architecture observations.\\
+\textbf{Status.} PENDING.
+
+\section{FPGA-G4 --- C/RTL Co-Simulation}
+\textbf{Exit criterion.} RTL behavior agrees with the fixed-point reference within the
+frozen bit-level contract.\\
+\textbf{Status.} PENDING.
+
+\section{FPGA-G5 --- Timing and Resource Freeze}
+Required evidence: implemented timing, WNS/critical path, utilization, any evaluated
+mitigation, and final configuration. A 100 MHz target is treated as a design target/stretch
+goal, not as a result to be asserted in advance.\\
+\textbf{Status.} PENDING.

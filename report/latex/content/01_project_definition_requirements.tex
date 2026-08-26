@@ -1,0 +1,110 @@
+\chapter{Project Definition and Engineering Requirements}
+\label{ch:project-definition}
+
+\section{Engineering Problem}
+The EE 6800 project addresses one controlled engineering question: how can an existing
+floating-point sample-covariance-matrix (SCM) front end be translated into a traceable
+fixed-point implementation on the PYNQ-Z2 while preserving numerical meaning and
+producing independently reviewable software, HLS, implementation, interface, board, and
+downstream direction-of-arrival (DOA) evidence?
+
+The project is intentionally organized as an evidence chain rather than as a collection of
+unconnected demonstrations:
+\begin{equation}
+\boxed{
+\begin{aligned}
+\text{Requirement} &\rightarrow \text{Theory} \rightarrow \text{Reference} \\
+&\rightarrow \text{Numerical Design} \rightarrow \text{FPGA Implementation} \\
+&\rightarrow \text{Verification} \rightarrow \text{Engineering Interpretation}
+\end{aligned}}
+\end{equation}
+
+\section{Verified Starting Point}
+The approved project proposal defines the following starting point and remaining work~\cite{molhem2026ee6800proposal}.
+\begin{table}[H]
+\centering
+\caption{Verified starting point and principal EE 6800 work.}
+\begin{tabularx}{\textwidth}{@{}p{0.28\textwidth}X p{0.20\textwidth}@{}}
+\toprule
+\textbf{Item} & \textbf{Starting evidence} & \textbf{Project status}\\
+\midrule
+SCM workload & Eight complex sensor channels and 128 snapshots per default frame & Frozen baseline\\
+Arithmetic & Single-precision complex floating-point reference & Existing baseline\\
+HLS verification & C simulation, C synthesis, and C/RTL co-simulation previously demonstrated & Must be re-verified for selected fixed point\\
+Timing & Prior implementation reported negative slack at the stated 100 MHz target & Characterize, do not conceal\\
+Board integration & Not yet completed & Core EE 6800 work\\
+Downstream DOA & Existing software estimator remains on ARM/host side & Reuse and verify\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Baseline Scope}
+The baseline is deliberately narrow, consistent with the approved proposal~\cite{molhem2026ee6800proposal}: one ULA reference case, $N=8$ complex channels,
+$M=128$ snapshots, SCM formation in programmable logic, and host-side MUSIC or sector
+estimation after the covariance matrix is returned. Controlled synthetic vectors are used to
+isolate the digital implementation from RF acquisition uncertainties.
+
+\section{Explicit Non-Goals}
+The baseline does not require a new DOA algorithm, sparse-array processing, a complete
+FMCW range--Doppler chain, RF/ADC acquisition, CST modeling, full MUSIC acceleration,
+robotics, machine learning, or product-level power optimization. These are future extensions
+only after the core evidence package is stable.
+
+\section{Program-Level Gate Architecture}
+The project is controlled by four gate families plus final release gates. A gate may be
+\textbf{PENDING}, \textbf{ACTIVE}, \textbf{PASS}, or \textbf{HOLD/FAIL}. A PASS requires
+traceable evidence; prose completion alone cannot close a gate.
+
+\begin{longtable}{@{}p{0.13\textwidth}p{0.27\textwidth}p{0.43\textwidth}p{0.11\textwidth}@{}}
+\caption{Master gate registry at architecture-freeze stage.}\label{tab:master-gates}\\
+\toprule
+\textbf{Gate} & \textbf{Title} & \textbf{Closure purpose} & \textbf{Status}\\
+\midrule
+\endfirsthead
+\multicolumn{4}{c}{\tablename\ \thetable\ -- continued from previous page}\\
+\toprule
+\textbf{Gate} & \textbf{Title} & \textbf{Closure purpose} & \textbf{Status}\\
+\midrule
+\endhead
+\midrule
+\multicolumn{4}{r}{Continued on next page}\\
+\endfoot
+\bottomrule
+\endlastfoot
+SYS-G0 & Project Contract & Freeze approved scope, baseline, non-goals, and evidence taxonomy & PASS\\
+SYS-G1 & Architecture / Evidence Contract & Freeze PS/PL partition, validation layers, metrics provenance, and traceability & ACTIVE\\
+\midrule
+SP-G0 & Signal Contract & Freeze dimensions, SCM convention, array/angle/ordering conventions & ACTIVE\\
+SP-G1 & Array/Snapshot Model & Verify physical and mathematical meaning of the input frame & PENDING\\
+SP-G2 & Floating-Point SCM Reference & Establish authoritative golden covariance and structural checks & PENDING\\
+SP-G3 & Error Separation & Separate finite-snapshot statistical error from numerical error & PENDING\\
+SP-G4 & Numeric Requirements & Establish dynamic range, quantization, product and accumulator requirements & PENDING\\
+SP-G5 & Fixed-Point SCM Fidelity & Quantify covariance perturbation and structural preservation & PENDING\\
+SP-G6 & Downstream DOA Consistency & Quantify DOA change caused by numerical representation & PENDING\\
+SP-G7 & Signal-Processing Acceptance & Select/accept the numerical representation from DSP evidence & PENDING\\
+\midrule
+FPGA-G0 & Numeric Format Handoff & Convert accepted numerical requirements into implementation contract & PENDING\\
+FPGA-G1 & Fixed-Point C++ Model & Establish bit-oriented reference behavior & PENDING\\
+FPGA-G2 & HLS C Simulation & Verify HLS functional behavior & PENDING\\
+FPGA-G3 & Synthesis / Architecture & Characterize latency, II, resources, and architecture mapping & PENDING\\
+FPGA-G4 & C/RTL Co-Simulation & Verify C-to-RTL numerical agreement & PENDING\\
+FPGA-G5 & Timing / Resource Freeze & Establish implemented timing/resource evidence and final HLS configuration & PENDING\\
+\midrule
+INT-G0 & AXI Stream Contract & Freeze packing, ordering, sign extension, frame and TLAST behavior & PENDING\\
+INT-G1 & Packing / Loopback & Verify transport independently of complex SCM arithmetic & PENDING\\
+INT-G2 & Vivado Overlay & Produce and verify the PS--DMA--PL implementation & PENDING\\
+INT-G3 & PS--PL--PS Transaction & Execute covariance transaction on PYNQ-Z2 & PENDING\\
+INT-G4 & Board vs Golden & Compare returned covariance against bit-accurate and float references & PENDING\\
+\midrule
+E2E-G0 & Board Covariance to Software DOA & Demonstrate end-to-end application path & PENDING\\
+E2E-G1 & Performance Characterization & Separate HLS cycles, implemented timing, host timing, and DMA+accelerator timing & PENDING\\
+E2E-G2 & Engineering Interpretation & Close accuracy/resource/timing/integration trade decisions & PENDING\\
+REL-G0 & Reproducibility / Final Release & Fresh-checkout reproduction and claim-to-evidence audit & PENDING\\
+\end{longtable}
+
+\section{Gate Closure Standard}
+Every gate shall contain the same engineering record: (1) purpose, (2) scientific or
+engineering question, (3) frozen inputs and assumptions, (4) theory/design basis,
+(5) implementation or evaluation method, (6) verification and acceptance criteria,
+(7) evidence produced, (8) engineering interpretation, and (9) explicit gate decision.
+This standard is used in the report and will also govern repository pull requests.
