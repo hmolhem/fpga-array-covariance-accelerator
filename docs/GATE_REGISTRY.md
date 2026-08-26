@@ -57,7 +57,7 @@ before algorithmic implementation begins.
 
 | Gate | Title | Status |
 |---|---|---|
-| SP-G0 | Signal-Processing Contract Freeze | ACTIVE |
+| SP-G0 | Signal-Processing Contract Freeze | PASS |
 | SP-G1 | Array Signal and Snapshot Model | PENDING |
 | SP-G2 | Floating-Point SCM Golden Reference | PENDING |
 | SP-G3 | Statistical vs Numerical Error Separation | PENDING |
@@ -67,10 +67,27 @@ before algorithmic implementation begins.
 | SP-G7 | Signal-Processing Acceptance | PENDING |
 
 ### SP-G0
+
 Freeze dimensions, indexing, ULA convention, steering convention,
 normalization, complex representation, frame layout, and deterministic
 reference scenario.
 
+Closure evidence:
+
+- `docs/gates/SP_G0_SIGNAL_PROCESSING_CONTRACT.md`
+- `docs/gates/SP_G0_PRE_CLOSURE_AUDIT.md`
+- `docs/decisions/SP_G0_CANONICAL_SIGNAL_CONVENTIONS.md`
+- `report/latex/content/03_signal_processing_and_numerical_model.tex`
+
+Closure result:
+
+- 12 / 12 SP-G0 acceptance criteria: PASS
+- diff hygiene: PASS
+- report alignment: PASS
+- LaTeX smoke compilation: PASS
+- SP-G0 status: PASS
+- SP-G1 remains PENDING and is the next permitted signal-processing gate
+  after this closure is integrated into `main`.
 ### SP-G1
 Establish the array signal model and verify snapshot generation against the
 frozen steering-vector convention.
@@ -190,5 +207,3 @@ Every detailed gate record shall contain:
 9. Gate Decision
 
 No section may be silently omitted when a gate is closed.
-
-
