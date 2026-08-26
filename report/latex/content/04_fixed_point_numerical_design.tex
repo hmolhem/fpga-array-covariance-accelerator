@@ -1,0 +1,31 @@
+\chapter{Fixed-Point Numerical Design}
+\label{ch:fixed-point}
+\textbf{Chapter status: PENDING IMPLEMENTATION EVIDENCE.}
+
+This chapter will convert SP-G4/SP-G7 outputs into an implementation-ready numeric
+contract. It is intentionally present before results exist.
+
+\section{Input Dynamic-Range Characterization}
+Pending: measured/observed reference input envelope and normalization assumptions.
+
+\section{Candidate Format A}
+Pending: total width, integer width, fractional width, rounding, saturation, and signedness.
+
+\section{Candidate Format B}
+Pending: total width, integer width, fractional width, rounding, saturation, and signedness.
+
+\section{Product and Accumulator Widths}
+Pending: explicit derivation for real and imaginary complex MAC paths over 128 snapshots.
+
+\section{Bit-Accurate Reference Model}
+Pending: independent fixed-point C++/software model used as the authoritative bit-oriented
+reference for HLS and board comparisons.
+
+\section{Candidate Comparison and Selection}
+The selection shall combine numerical fidelity, implementation cost, and integration risk.
+The smallest word length is not automatically the preferred engineering choice.
+
+\section{FPGA-G0 --- Numeric Format Handoff}
+\textbf{Exit criterion.} One selected format, internal growth rules, saturation/rounding
+policy, and packing implications are frozen for implementation.\\
+\textbf{Status.} PENDING.

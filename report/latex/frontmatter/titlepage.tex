@@ -1,0 +1,91 @@
+% =========================================================
+% frontmatter/titlepage.tex
+% Standard report cover assembled from setup/00_metadata.tex
+% =========================================================
+%
+% This file controls layout only. Edit names, titles, institutional
+% information, visibility switches, logo path, and date in:
+%     setup/00_metadata.tex
+%
+% Keeping content and layout separate prevents title-page edits from
+% being duplicated across main.tex and this file.
+% =========================================================
+
+\begin{titlepage}
+    \thispagestyle{titlepage}
+    \centering
+
+    % Horizontal rule used above and below the report title.
+    \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+    % -----------------------------------------------------
+    % Optional organization or university logo
+    % -----------------------------------------------------
+    % The visibility switch, file path, and width are defined in
+    % setup/00_metadata.tex. A visible warning is preferable to a
+    % silently missing logo when the logo is intentionally enabled.
+    \ifshowreportlogo
+        \IfFileExists{\reportlogo}{%
+            \includegraphics[width=\reportlogowidth]{\reportlogo}\\[1.5cm]
+        }{%
+            \fbox{%
+                \parbox[c][2.3cm][c]{0.72\textwidth}{%
+                    \centering
+                    Configured logo file was not found:\\
+                    \texttt{\detokenize\expandafter{\reportlogo}}
+                }%
+            }\\[1.5cm]
+        }
+    \else
+        % Preserve balanced cover spacing when no logo is requested.
+        \vspace*{1.5cm}
+    \fi
+
+    % -----------------------------------------------------
+    % Report title
+    % -----------------------------------------------------
+    \HRule\\[0.4cm]
+    {\huge\bfseries \reporttitle}\\[0.4cm]
+    \HRule\\[1.5cm]
+
+    % -----------------------------------------------------
+    % Context and institution
+    % -----------------------------------------------------
+    \textsc{\Large \coursename}\\[1.0cm]
+    \textsc{\Large \universityname}\\[0.5cm]
+    \textsc{\large \departmentname}\\[0.95cm]
+
+    % -----------------------------------------------------
+    % Author and optional identification/supervision rows
+    % -----------------------------------------------------
+    \begin{flushleft}
+        \large
+
+        \textit{\authorlabel:}\\
+        \textbf{\studentname}\\[0.1cm]
+
+        \ifshowstudentid
+            \textbf{\studentidlabel:} \textbf{\studentid}\\[0.8cm]
+        \else
+            \vspace{0.8cm}
+        \fi
+
+        \ifshowsupervisor
+            \textit{\supervisorlabel:}\\
+            \textbf{\professorname}
+        \fi
+    \end{flushleft}
+
+    \vfill
+
+    % -----------------------------------------------------
+    % Submission date and optional semester/project period
+    % -----------------------------------------------------
+    \submissiondate\par
+
+    \ifshowsemester
+        \vspace{0.15cm}
+        \semestername
+    \fi
+
+\end{titlepage}

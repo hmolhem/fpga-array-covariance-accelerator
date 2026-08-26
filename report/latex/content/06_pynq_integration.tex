@@ -1,0 +1,34 @@
+\chapter{PYNQ-Z2 PS--PL Integration}
+\label{ch:pynq-integration}
+\textbf{Chapter status: PENDING BOARD EVIDENCE.}
+
+\section{PS/PL Partition}
+The ARM processing system prepares buffers, controls DMA, unpacks results, performs
+comparisons, and executes the existing software DOA path. The PL receives one frame and
+returns one covariance matrix.
+
+\section{INT-G0 --- AXI4-Stream Interface Contract}
+The contract shall freeze word width, real/imaginary packing, sample order, sensor/snapshot
+order, signed representation, sign extension, endianness, frame length, output order, and
+TLAST behavior.\\
+\textbf{Status.} PENDING.
+
+\section{INT-G1 --- Packing and Loopback Verification}
+Known integer patterns shall be transferred before complex SCM data so transport errors can
+be separated from numerical errors.\\
+\textbf{Status.} PENDING.
+
+\section{INT-G2 --- Vivado Overlay}
+Pending: Zynq PS, AXI DMA, HLS IP, interconnect, clocks/resets, and generated .bit/.hwh
+artifacts.\\
+\textbf{Status.} PENDING.
+
+\section{INT-G3 --- PS--PL--PS Board Transaction}
+Pending: contiguous PYNQ buffers, DMA transaction, completion checks, and repeatability.\\
+\textbf{Status.} PENDING.
+
+\section{INT-G4 --- Board versus Golden Comparison}
+The returned covariance shall be compared first with the bit-accurate fixed-point reference
+and then with the floating-point reference. Interface defects and expected quantization must
+not be conflated.\\
+\textbf{Status.} PENDING.

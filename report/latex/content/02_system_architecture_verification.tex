@@ -1,0 +1,57 @@
+\chapter{System Architecture and Verification Strategy}
+\label{ch:system-architecture}
+
+\section{End-to-End Architecture}
+The project preserves one bounded hardware/software partition:
+\begin{equation}
+\boxed{
+\text{Python/ARM PS}
+\rightarrow
+\text{AXI DMA}
+\rightarrow
+\text{Fixed-Point SCM in PL}
+\rightarrow
+\text{AXI DMA}
+\rightarrow
+\text{Software DOA}
+}.
+\end{equation}
+Python prepares synthetic complex snapshots, controls the transfer, receives the covariance
+matrix, and invokes the existing software estimator. Programmable logic performs SCM
+formation only.
+
+\section{Verification Ladder}
+A result is identified by its evidence layer; layers are never treated as interchangeable.
+\begin{enumerate}
+    \item \textbf{Software evidence}: floating-point and bit-accurate fixed-point models.
+    \item \textbf{HLS evidence}: C simulation, synthesis, and C/RTL co-simulation.
+    \item \textbf{Implementation evidence}: Vivado timing and utilization reports.
+    \item \textbf{Board evidence}: PYNQ notebook output and host-observed measurements.
+\end{enumerate}
+
+\section{Reference Hierarchy}
+The numerical comparison chain is
+\begin{equation}
+\boxed{
+\widehat{\mat R}_{\mathrm{fp}}
+\leftrightarrow
+\widehat{\mat R}_{\mathrm{fxp,bit}}
+\leftrightarrow
+\widehat{\mat R}_{\mathrm{HLS/RTL}}
+\leftrightarrow
+\widehat{\mat R}_{\mathrm{board}}
+}.
+\end{equation}
+A difference between fixed point and floating point may be legitimate quantization. A
+difference between board output and the bit-accurate fixed-point model is an implementation
+or interface discrepancy until proven otherwise.
+
+\section{Metric Provenance Rule}
+Latency and performance values must be labeled by source. HLS cycle estimates,
+post-implementation timing, software runtime, and host-observed DMA-plus-accelerator time
+shall not be combined into a single speedup claim without a comparable measurement basis.
+
+\section{SYS-G1 Acceptance Criteria}
+SYS-G1 passes when the interface boundary, evidence layers, comparison hierarchy, metric
+provenance, and gate/PR traceability rules are frozen in the repository. Current status:
+\textbf{ACTIVE}; repository-specific identifiers will be frozen after repository creation.

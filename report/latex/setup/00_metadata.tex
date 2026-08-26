@@ -1,0 +1,73 @@
+% =========================================================
+% setup/00_metadata.tex
+% EE 6800 project report metadata
+% =========================================================
+
+% =========================================================
+% 1. Course and institution
+% =========================================================
+\newcommand{\coursenumber}{EE 6800}
+\newcommand{\coursetitle}{Master's Project}
+\newcommand{\coursename}{\coursenumber\ \coursetitle}
+\newcommand{\courseshorttitle}{EE 6800 Master's Project}
+
+\newcommand{\departmentname}{Department of Electrical and Computer Engineering}
+\newcommand{\universityname}{Kennesaw State University}
+
+% =========================================================
+% 2. Report identity
+% =========================================================
+\newcommand{\assignmenttype}{Technical Project Report}
+\newcommand{\projecttitle}{Fixed-Point PYNQ-Z2 Implementation of an Array-Processing Covariance Front End}
+\newcommand{\projectshorttitle}{PYNQ-Z2 Covariance Front End}
+
+\newcommand{\reporttitle}{%
+    \assignmenttype:\\[0.35cm]
+    Fixed-Point PYNQ-Z2 Implementation\\[0.15cm]
+    of an Array-Processing Covariance Front End%
+}
+
+\newcommand{\reporttitleplain}{Technical Project Report: Fixed-Point PYNQ-Z2 Implementation of an Array-Processing Covariance Front End}
+\newcommand{\reportshorttitle}{\projectshorttitle}
+
+% =========================================================
+% 3. Author, supervisor, and submission information
+% =========================================================
+\newcommand{\studentname}{Hossein Molhem}
+\newcommand{\studentid}{}
+\newcommand{\studentidlabel}{Student ID}
+\newcommand{\professorname}{Dr. Yan Fang}
+\newcommand{\semestername}{Fall Semester 2026}
+\newcommand{\submissiondate}{August 2026}
+
+\newif\ifshowstudentid
+\showstudentidfalse
+
+\newif\ifshowsupervisor
+\showsupervisortrue
+
+\newif\ifshowsemester
+\showsemestertrue
+
+\newcommand{\authorlabel}{Author}
+\newcommand{\supervisorlabel}{Instructor / Supervisor}
+
+% =========================================================
+% 4. Running headers
+% =========================================================
+\newcommand{\headerleft}{\courseshorttitle}
+\newcommand{\headerright}{\reportshorttitle}
+
+% =========================================================
+% 5. Cover logo
+% =========================================================
+\newif\ifshowreportlogo
+\showreportlogotrue
+\newcommand{\reportlogo}{figures/KSU.png}
+\newcommand{\reportlogowidth}{5.4cm}
+
+% =========================================================
+% 6. PDF document properties
+% =========================================================
+\newcommand{\pdfsubjecttext}{EE 6800 Master's Project -- FPGA/SoC Array Processing}
+\newcommand{\pdfkeywordstext}{signal processing, array processing, sample covariance matrix, fixed point, PYNQ-Z2, FPGA, HLS, DOA estimation}

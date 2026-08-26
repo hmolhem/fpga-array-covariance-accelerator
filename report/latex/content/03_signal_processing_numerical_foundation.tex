@@ -1,0 +1,100 @@
+\chapter{Signal Processing and Numerical Foundation}
+\label{ch:signal-processing}
+
+\section{Signal-Processing Gate Roadmap}
+This chapter contains the complete SP-G0 through SP-G7 roadmap. The chapter is written
+before all experiments are complete so that future results fill predefined evidence locations
+rather than changing the scientific question after outcomes are known.
+
+\input{content/03_signal_processing_and_numerical_model}
+
+\section{SP-G1 --- Array Signal and Snapshot Model}
+\textbf{Purpose.} Establish the physical and mathematical meaning of the $8\times128$
+complex input frame.\\
+\textbf{Gate question.} What does one snapshot represent, how does the ULA steering law
+produce inter-sensor phase structure, and can the deterministic frame be regenerated from
+frozen conventions?\\
+\textbf{Required theory.} Narrowband array model $\vec x[m]=\mat A(\boldsymbol\theta)\vec s[m]+\vec n[m]$,
+steering vector, sensor coordinates, snapshot matrix.\\
+\textbf{Evidence.} Deterministic single-source steering-vector case, dimensional checks,
+phase-progression check.\\
+\textbf{Exit criterion.} The canonical input frame is regenerated from documented
+parameters and conventions.\\
+\textbf{Status.} PENDING.
+
+\section{SP-G2 --- Floating-Point SCM Golden Reference}
+\textbf{Purpose.} Establish the authoritative software covariance result.\\
+\textbf{Gate question.} Does an independent floating-point reference reproduce the same
+SCM for common vectors and preserve expected matrix structure?\\
+\textbf{Required theory.}
+$\widehat{\mat R}=M^{-1}\mat X\mat X^{\mathsf H}$, element-wise conjugate products,
+Hermitian structure, real-valued diagonal in exact arithmetic, positive-semidefinite behavior.\\
+\textbf{Evidence.} Saved $\mat X$, saved $\widehat{\mat R}_{fp}$, independent NumPy/reference
+comparison, Hermitian residual, diagonal checks.\\
+\textbf{Exit criterion.} One deterministic and a small randomized set reproduce within
+defined floating-point tolerance.\\
+\textbf{Status.} PENDING.
+
+\section{SP-G3 --- Statistical versus Numerical Error Separation}
+\textbf{Purpose.} Prevent finite-snapshot estimation error from being misidentified as
+fixed-point error.\\
+\textbf{Gate question.} Which discrepancy belongs to statistical estimation and which to
+finite-word-length representation?\\
+\textbf{Required theory.}
+\begin{equation}
+\mat R_x \rightarrow \widehat{\mat R}_{fp} \rightarrow \widehat{\mat R}_{fxp},
+\end{equation}
+with $\widehat{\mat R}_{fp}-\mat R_x$ treated separately from
+$\widehat{\mat R}_{fxp}-\widehat{\mat R}_{fp}$.\\
+\textbf{Evidence.} Defined notation, one controlled finite-snapshot illustration, and code
+variables that keep the two errors distinct.\\
+\textbf{Exit criterion.} Statistical and numerical error metrics cannot be silently mixed.\\
+\textbf{Status.} PENDING.
+
+\section{SP-G4 --- Numeric Range and Fixed-Point Requirements}
+\textbf{Purpose.} Convert signal properties into defensible word-length requirements.\\
+\textbf{Gate question.} What input, product, and accumulator ranges are required under the
+approved frame envelope?\\
+\textbf{Required theory.} Quantization step, signed fixed point, scaling, complex
+conjugate product, word growth, rounding, saturation, and overflow. For $M=128$, the
+accumulation depth must be handled explicitly.\\
+\textbf{Evidence.} Observed input envelope, two candidate formats, product/accumulator
+width derivation, quantization policy, overflow/saturation instrumentation.\\
+\textbf{Exit criterion.} Two candidates are fully specified without relying on implicit
+compiler width behavior.\\
+\textbf{Status.} PENDING.
+
+\section{SP-G5 --- Fixed-Point Covariance Fidelity}
+\textbf{Purpose.} Quantify how much the candidate numerical representation perturbs SCM.\\
+\textbf{Primary metric.}
+\begin{equation}
+\epsilon_R=\frac{\|\widehat{\mat R}_{fxp}-\widehat{\mat R}_{fp}\|_F}
+{\|\widehat{\mat R}_{fp}\|_F}.
+\end{equation}
+Additional evidence includes maximum element error, Hermitian residual, diagonal
+consistency, and overflow/saturation counts.\\
+\textbf{Exit criterion.} Each candidate has a traceable fidelity record on deterministic and
+regression vectors.\\
+\textbf{Status.} PENDING.
+
+\section{SP-G6 --- Downstream DOA Consistency}
+\textbf{Purpose.} Convert covariance error into an application-level consequence without
+moving eigendecomposition or MUSIC into FPGA logic.\\
+\textbf{Gate question.} Does the fixed-point covariance materially alter the existing host
+DOA estimate for the approved test set?\\
+\textbf{Evidence.}
+$\widehat{\mat R}_{fp}\rightarrow\widehat\theta_{fp}$ and
+$\widehat{\mat R}_{fxp}\rightarrow\widehat\theta_{fxp}$ with
+$\Delta\theta=\widehat\theta_{fxp}-\widehat\theta_{fp}$. Eigenvalue/eigenspace diagnostics
+are added only if needed to explain a discrepancy.\\
+\textbf{Exit criterion.} Application-level numerical effect is quantified and reproducible.\\
+\textbf{Status.} PENDING.
+
+\section{SP-G7 --- Signal-Processing Acceptance}
+\textbf{Purpose.} Close the numerical design from a signal-processing perspective before
+hardware cost is used to select the final implementation.\\
+\textbf{Decision basis.} Covariance fidelity, overflow behavior, structural preservation,
+and downstream DOA consistency.\\
+\textbf{Exit criterion.} A documented DSP recommendation is issued for the format to be
+handed to FPGA-G0; any unresolved limitation is explicit.\\
+\textbf{Status.} PENDING.
