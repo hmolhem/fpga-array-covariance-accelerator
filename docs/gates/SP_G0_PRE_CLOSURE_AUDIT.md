@@ -22,7 +22,7 @@ The first question is evaluated by the twelve SP-G0 acceptance criteria.
 The second question includes report compilation, authoritative gate-status
 synchronization, handoff synchronization, and traceable commit evidence.
 
-SP-G0 shall remain ACTIVE until both layers are complete.
+During the pre-closure audit, SP-G0 remained ACTIVE until both layers were complete.
 
 ---
 
@@ -504,6 +504,7 @@ implementation.
 Status:
 
     PASS
+
 ## 6. Engineering Interpretation
 
 SP-G0 has succeeded at the contract level.

@@ -521,7 +521,6 @@ At the final PR #3 review checkpoint:
 - report alignment passed;
 - the complete LaTeX smoke build passed;
 - SP-G0 provenance closure is complete;
-- SP-G0 provenance closure is complete;
 - no SP-G1 implementation is included in PR #3.
 
 The SP-G0 closure package freezes the authoritative baseline for:
@@ -576,6 +575,7 @@ deterministic-case, random-regression, or logical-frame conventions unless a
 future explicit engineering decision formally revises the contract.
 
 ---
+
 ## 20. Handoff Principle
 
 This handoff captures project state for continuation.

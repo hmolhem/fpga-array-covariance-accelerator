@@ -64,6 +64,7 @@ Current continuation sequence:
     Begin SP-G1 — Array Signal and Snapshot Model
 
 ---
+
 ## Handoff Rule
 
 When project state changes:
