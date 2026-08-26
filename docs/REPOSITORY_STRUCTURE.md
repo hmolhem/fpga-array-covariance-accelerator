@@ -431,7 +431,7 @@ Generated HLS project and solution directories remain ignored by Git.
 ---
 
 ## 9. `vivado/`
-## Purpose
+### Purpose
 
 The `vivado/` directory owns reproducible source-like assets required to
 construct and implement the FPGA design after HLS.
