@@ -1,4 +1,4 @@
-\chapter{System Architecture and Verification Strategy}
+﻿\chapter{System Architecture and Verification Strategy}
 \label{ch:system-architecture}
 
 \section{End-to-End Architecture}
@@ -53,5 +53,9 @@ shall not be combined into a single speedup claim without a comparable measureme
 
 \section{SYS-G1 Acceptance Criteria}
 SYS-G1 passes when the interface boundary, evidence layers, comparison hierarchy, metric
-provenance, and gate/PR traceability rules are frozen in the repository. Current status:
-\textbf{ACTIVE}; repository-specific identifiers will be frozen after repository creation.
+provenance, verification identifiers, implementation-source ownership, and gate/PR
+traceability rules are frozen in the repository. Current status: \textbf{PASS}.
+Verification responsibilities V-01 through V-09 are defined, reproducible Vivado source
+ownership is established, and the final architecture-consistency audit completed without
+unresolved findings. This system-level closure does not imply acceptance of downstream
+signal-processing, FPGA, integration, or end-to-end gates.

@@ -430,7 +430,56 @@ Generated HLS project and solution directories remain ignored by Git.
 
 ---
 
-## 9. `pynq/`
+## Vivado Implementation Source Ownership
+
+## Purpose
+
+The `vivado/` directory owns reproducible source-like assets required to
+construct and implement the FPGA design after HLS.
+
+    vivado/
+    |-- scripts/
+    |-- constraints/
+    `-- README.md
+
+### `vivado/scripts/`
+
+Contains controlled Tcl automation for Vivado project construction,
+block-design generation, IP integration, synthesis, implementation, and
+selected report generation.
+
+### `vivado/constraints/`
+
+Contains controlled XDC and other implementation constraints affecting the
+implemented design and timing conclusions.
+
+Routine generated Vivado project output is excluded from source control.
+
+The architectural relationship is:
+
+    HLS IP
+        |
+        v
+    Vivado Source
+    (Tcl + Constraints)
+        |
+        v
+    Generated Implementation
+        |
+        v
+    Timing / Utilization Evidence
+        |
+        v
+    Verification Record
+        |
+        v
+    Engineering Result
+
+This closes the repository ownership gap between HLS and PYNQ board
+integration.
+
+---
+# 9. `pynq/`
 
 ### Purpose
 
@@ -903,3 +952,5 @@ It is intended to preserve the complete engineering chain:
     Reproducible Release
 
 That chain defines the organizational standard for this project.
+
+

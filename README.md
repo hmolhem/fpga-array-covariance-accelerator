@@ -176,6 +176,8 @@ The main engineering areas are:
 
     hls/              Synthesizable HLS source, testbenches, and scripts
 
+    vivado/           Reproducible Vivado Tcl and implementation constraints
+
     pynq/             PYNQ host-side integration and board-control code
 
     tests/            Unit, regression, and integration verification
@@ -358,3 +360,5 @@ This repository is under active engineering development.
 The source tree, interfaces, numerical formats, HLS architecture, and
 verification assets will evolve through controlled pull requests as project
 gates are completed.
+
+
