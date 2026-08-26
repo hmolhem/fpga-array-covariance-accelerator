@@ -198,7 +198,7 @@ Writing documentation alone is not gate closure.
 ### System
 
     SYS-G0  Project Contract                         PASS
-    SYS-G1  Architecture and Evidence Contract      ACTIVE
+    SYS-G1  Architecture and Evidence Contract      PASS
 
 ### Signal Processing
 
@@ -515,7 +515,7 @@ At the time of this handoff:
 - repository structure has been established;
 - pull-request governance has been established;
 - SYS-G0 is `PASS`;
-- SYS-G1 is `ACTIVE`;
+- SYS-G1 is `PASS`;
 - SP-G0 is `ACTIVE`;
 - later gates remain `PENDING`;
 - no new signal-processing or FPGA implementation shall begin during repository
@@ -529,13 +529,10 @@ Do not begin SP-G1.
 
 The permitted sequence is:
 
-    Complete PR #1
+    Complete PR #2
         |
         v
-    Merge repository foundation
-        |
-        v
-    Execute and close SYS-G1
+    Merge SYS-G1 architecture / evidence contract closure
         |
         v
     Resume and close SP-G0
@@ -559,3 +556,5 @@ When project state changes:
 - handoffs shall summarize, not redefine, the engineering truth.
 
 The repository itself remains the persistent source of truth.
+
+

@@ -27,7 +27,7 @@ and its evidence is committed or otherwise traceably recorded.
 | Gate | Title | Status |
 |---|---|---|
 | SYS-G0 | Project Contract | PASS |
-| SYS-G1 | Architecture and Evidence Contract | ACTIVE |
+| SYS-G1 | Architecture and Evidence Contract | PASS |
 
 ### SYS-G0 — Project Contract
 
@@ -190,4 +190,5 @@ Every detailed gate record shall contain:
 9. Gate Decision
 
 No section may be silently omitted when a gate is closed.
+
 

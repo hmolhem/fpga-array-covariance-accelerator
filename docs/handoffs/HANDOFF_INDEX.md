@@ -46,16 +46,13 @@ Preserves the master A-to-Z engineering architecture of the project, including:
 
 Current continuation sequence:
 
-    Complete PR #1
+    Complete PR #2
         |
         v
-    Merge Repository Foundation
+    Merge SYS-G1 Architecture / Evidence Contract Closure
         |
         v
-    Close SYS-G1
-        |
-        v
-    Close SP-G0
+    Resume and Close SP-G0
         |
         v
     Begin SP-G1
@@ -83,3 +80,6 @@ repository architecture, or detailed gate evidence.
 | `MASTER_PROJECT_ARCHITECTURE_HANDOFF.md` | Master project continuation architecture | ACTIVE |
 
 Additional handoffs shall be added to this index as the project progresses.
+
+
+
