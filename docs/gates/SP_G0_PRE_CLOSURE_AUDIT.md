@@ -1,9 +1,9 @@
-# SP-G0 â€” Pre-Closure Acceptance Audit
+# SP-G0 — Pre-Closure Acceptance Audit
 
-**Gate:** SP-G0 â€” Signal-Processing Contract Freeze
+**Gate:** SP-G0 — Signal-Processing Contract Freeze
 **Audit Type:** Pre-Closure Acceptance Audit
 **Gate Status During Audit:** ACTIVE
-**Audit Verdict:** CONTRACT ACCEPTANCE PASS â€” REPOSITORY CLOSURE PENDING
+**Audit Verdict:** PASS - CONTRACT AND PROVENANCE CLOSURE COMPLETE
 
 ---
 
@@ -54,7 +54,7 @@ Historical convention comparison:
 
 ## 3. Acceptance-Criterion Audit
 
-### AC-01 â€” Dimensions and logical X indexing
+### AC-01 — Dimensions and logical X indexing
 
 Requirement:
 
@@ -84,7 +84,7 @@ dimensions and sensor/snapshot indexing.
 
 ---
 
-### AC-02 â€” Covariance normalization and conjugation
+### AC-02 — Covariance normalization and conjugation
 
 Requirement:
 
@@ -117,7 +117,7 @@ and has been adopted unchanged by the project contract.
 
 ---
 
-### AC-03 â€” Mean treatment
+### AC-03 — Mean treatment
 
 Requirement:
 
@@ -140,7 +140,7 @@ Result:
 
 ---
 
-### AC-04 â€” ULA spacing and sensor coordinates
+### AC-04 — ULA spacing and sensor coordinates
 
 Requirement:
 
@@ -165,7 +165,7 @@ with the predecessor deterministic steering vector.
 
 ---
 
-### AC-05 â€” Angular reference and positive-angle direction
+### AC-05 — Angular reference and positive-angle direction
 
 Requirement:
 
@@ -184,7 +184,7 @@ Result:
 
 ---
 
-### AC-06 â€” Steering trigonometric convention
+### AC-06 — Steering trigonometric convention
 
 Requirement:
 
@@ -204,7 +204,7 @@ Result:
 
 ---
 
-### AC-07 â€” Steering exponential sign
+### AC-07 — Steering exponential sign
 
 Requirement:
 
@@ -232,7 +232,7 @@ non-canonical unless explicitly adapted and verified.
 
 ---
 
-### AC-08 â€” Deterministic golden reference case
+### AC-08 — Deterministic golden reference case
 
 Requirement:
 
@@ -272,7 +272,7 @@ physical interpretation is now explicitly frozen by the new project contract.
 
 ---
 
-### AC-09 â€” Randomized regression policy
+### AC-09 — Randomized regression policy
 
 Requirement:
 
@@ -294,7 +294,7 @@ Result:
 
 ---
 
-### AC-10 â€” SP-G0 / INT-G0 responsibility boundary
+### AC-10 — SP-G0 / INT-G0 responsibility boundary
 
 Requirement:
 
@@ -327,7 +327,7 @@ logical matrix representation.
 
 ---
 
-### AC-11 â€” Historical convention conflicts
+### AC-11 — Historical convention conflicts
 
 Requirement:
 
@@ -351,7 +351,7 @@ Result:
 
 ---
 
-### AC-12 â€” SP-G1 can begin without undocumented convention choices
+### AC-12 — SP-G1 can begin without undocumented convention choices
 
 Requirement:
 
@@ -474,19 +474,36 @@ Status:
 
     PASS
 
-### RC-06 — Traceable Git / PR evidence
+### RC-06 - Traceable Git / PR evidence
 
 Requirement:
 
 The approved SP-G0 closure package shall be committed on the focused SP-G0
 branch and reviewed through PR #3.
 
+Evidence:
+
+    Branch:
+    docs/sp-g0-signal-processing-contract
+
+    Initial closure commit:
+    0e17bc31bb7f6acad8675b8a739906ae9cd3fc17
+
+    Pull request:
+    PR #3 - Close SP-G0 signal-processing contract
+
+    Base:
+    main
+
+    Pull-request state at provenance closure:
+    OPEN
+
+The pull request contains only the bounded SP-G0 closure package and no SP-G1
+implementation.
+
 Status:
 
-    PENDING
-
-This criterion cannot be marked PASS before the actual commit and pull-request
-evidence exists.
+    PASS
 ## 6. Engineering Interpretation
 
 SP-G0 has succeeded at the contract level.
@@ -513,7 +530,7 @@ This is the intended purpose of SP-G0.
 
 ---
 
-## 7. Pre-Closure Decision
+## 7. Closure Decision
 
 Scientific / engineering acceptance:
 
@@ -523,20 +540,25 @@ Acceptance criteria:
 
     12 / 12 PASS
 
-Repository closure checks completed before commit:
+Repository closure checks:
 
-    RC-01 through RC-05 PASS
-
-Traceable Git / PR evidence:
-
-    RC-06 PENDING
+    RC-01 through RC-06 PASS
 
 Repository contract state:
 
     SP-G0 = PASS
     SP-G1 = PENDING
 
-The SP-G0 engineering contract is closed.
+Traceable provenance:
 
-The remaining action is provenance closure: commit this bounded package and
-review it through PR #3 before integration into `main`.
+    Initial closure commit:
+    0e17bc31bb7f6acad8675b8a739906ae9cd3fc17
+
+    Pull request:
+    PR #3 - Close SP-G0 signal-processing contract
+
+SP-G0 is closed.
+
+PR #3 contains the focused SP-G0 closure package. SP-G1 remains PENDING and
+shall begin only after this pull request is reviewed, merged into `main`, and
+the repository returns to a clean synchronized main-branch state.
