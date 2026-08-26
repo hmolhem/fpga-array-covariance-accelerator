@@ -1,0 +1,303 @@
+﻿\section{SP-G0 --- Signal-Processing Contract Freeze}
+\label{sec:sp-g0}
+
+\subsection{Purpose}
+
+SP-G0 establishes the authoritative signal-processing contract that all later
+software, fixed-point, HLS, RTL, and board-level verification shall use.
+
+The purpose of this gate is to prevent numerical or hardware implementation
+from proceeding while basic array-processing conventions remain implicit or
+ambiguous.
+
+The central requirement is that the same physical and numerical interpretation
+of the input snapshot matrix shall be preserved across the complete chain
+
+\[
+\text{Signal Model}
+\rightarrow
+\text{Floating-Point Reference}
+\rightarrow
+\text{Fixed-Point Reference}
+\rightarrow
+\text{HLS/RTL}
+\rightarrow
+\text{Board}.
+\]
+
+\subsection{Engineering Question}
+
+The engineering question for SP-G0 is:
+
+\begin{quote}
+What exact signal, array, indexing, normalization, complex-data, and frame
+conventions define the canonical input and covariance output of the project?
+\end{quote}
+
+These conventions must be frozen before SP-G1 begins.
+
+\subsection{Currently Frozen Baseline}
+
+The following baseline properties are already established by the approved
+project scope and therefore do not require reinvention:
+
+\begin{itemize}
+    \item number of sensor channels:
+    \[
+    N = 8;
+    \]
+
+    \item default number of snapshots:
+    \[
+    M = 128;
+    \]
+
+    \item snapshot matrix:
+    \[
+    \mathbf X \in \mathbb C^{N\times M};
+    \]
+
+    \item snapshots are represented as columns of $\mathbf X$;
+
+    \item the sample covariance matrix is defined as
+    \[
+    \widehat{\mathbf R}
+    =
+    \frac{1}{M}
+    \mathbf X \mathbf X^{\mathsf H};
+    \]
+
+    \item the baseline FPGA responsibility is sample covariance matrix
+    formation;
+
+    \item downstream DOA estimation remains in software for the baseline
+    project;
+
+    \item the baseline geometry belongs to the uniform linear array family;
+
+    \item controlled synthetic data are used for baseline verification;
+
+    \item verification shall include at least one deterministic reference case
+    together with a small controlled regression set;
+
+    \item the existing floating-point implementation is treated as prior
+    engineering evidence, but its conventions must still be audited before
+    they become the formal signal-processing contract.
+\end{itemize}
+
+\subsection{Conventions That Remain Open}
+
+The following items shall not be guessed.
+
+They must be extracted from the authoritative existing Python and HLS
+implementations, reconciled where necessary, and explicitly recorded before
+SP-G0 can close:
+
+\begin{enumerate}
+    \item exact ULA element spacing;
+
+    \item sensor-coordinate definition and coordinate origin;
+
+    \item sensor indexing convention;
+
+    \item angular reference convention, including whether angle is measured
+    from broadside or endfire;
+
+    \item steering-vector trigonometric convention, including the use of
+    $\sin(\theta)$ or $\cos(\theta)$;
+
+    \item complex exponential sign convention used by the steering vector;
+
+    \item treatment of the sample mean before covariance formation;
+
+    \item exact deterministic reference scenario, including source angle,
+    source amplitude, phase, and noise assumptions;
+
+    \item random-seed policy for regression cases;
+
+    \item complex sample ordering used by the software reference;
+
+    \item frame traversal order across sensor and snapshot dimensions;
+
+    \item real/imaginary ordering used when data are later packed for the
+    hardware interface.
+\end{enumerate}
+
+No downstream gate may silently introduce its own alternative convention.
+
+\subsection{Covariance Definition}
+
+For the approved frame
+
+\[
+\mathbf X
+=
+\begin{bmatrix}
+x_1[0] & x_1[1] & \cdots & x_1[M-1] \\
+x_2[0] & x_2[1] & \cdots & x_2[M-1] \\
+\vdots & \vdots & \ddots & \vdots \\
+x_N[0] & x_N[1] & \cdots & x_N[M-1]
+\end{bmatrix},
+\]
+
+the covariance element is
+
+\[
+\widehat R_{ij}
+=
+\frac{1}{M}
+\sum_{m=0}^{M-1}
+x_i[m]\,x_j^{*}[m].
+\]
+
+Therefore,
+
+\[
+\widehat{\mathbf R}
+=
+\frac{1}{M}
+\mathbf X\mathbf X^{\mathsf H}.
+\]
+
+The conjugation convention is fundamental because the FPGA implementation
+must reproduce the same complex multiplication rule as the numerical
+reference.
+
+For
+
+\[
+x_i = a + jb,
+\qquad
+x_j = c + jd,
+\]
+
+the required product is
+
+\[
+x_i x_j^{*}
+=
+(a+jb)(c-jd)
+=
+(ac+bd)
++
+j(bc-ad).
+\]
+
+This expression shall later be used directly in fixed-point range analysis
+and HLS verification.
+
+\subsection{Statistical and Numerical Boundaries}
+
+SP-G0 also establishes the terminology required to avoid mixing distinct
+sources of error.
+
+The project shall preserve the hierarchy
+
+\[
+\mathbf R_x
+\rightarrow
+\widehat{\mathbf R}_{fp}
+\rightarrow
+\widehat{\mathbf R}_{fxp}
+\rightarrow
+\widehat{\mathbf R}_{hw},
+\]
+
+where
+
+\begin{itemize}
+    \item $\mathbf R_x$ denotes the population covariance model where such a
+    model is defined;
+
+    \item $\widehat{\mathbf R}_{fp}$ denotes the finite-snapshot
+    floating-point sample covariance matrix;
+
+    \item $\widehat{\mathbf R}_{fxp}$ denotes the bit-accurate fixed-point
+    numerical result;
+
+    \item $\widehat{\mathbf R}_{hw}$ denotes a hardware-produced result,
+    including HLS/RTL or board output as explicitly identified.
+\end{itemize}
+
+Consequently,
+
+\[
+\widehat{\mathbf R}_{fp} - \mathbf R_x
+\]
+
+is associated with finite-snapshot statistical estimation behavior, while
+
+\[
+\widehat{\mathbf R}_{fxp}
+-
+\widehat{\mathbf R}_{fp}
+\]
+
+is associated with finite-word-length numerical behavior.
+
+These quantities shall not be presented as the same error source.
+
+\subsection{Required SP-G0 Evidence}
+
+SP-G0 closure shall require traceable evidence showing that:
+
+\begin{enumerate}
+    \item the authoritative existing reference implementation has been
+    inspected;
+
+    \item array geometry and steering conventions have been extracted;
+
+    \item snapshot dimensions and ordering have been verified;
+
+    \item covariance normalization has been verified;
+
+    \item complex conjugation behavior has been verified;
+
+    \item deterministic reference-case parameters have been frozen;
+
+    \item random regression policy has been frozen;
+
+    \item unresolved inconsistencies, if any, have been explicitly recorded
+    rather than silently reconciled.
+\end{enumerate}
+
+\subsection{Acceptance Criteria}
+
+SP-G0 may be marked PASS only when:
+
+\begin{enumerate}
+    \item all open conventions listed above are resolved from authoritative
+    implementation evidence;
+
+    \item the resulting contract is recorded in the repository;
+
+    \item no conflicting convention remains between the approved software and
+    hardware reference paths;
+
+    \item SP-G1 can generate its canonical array snapshot case without making
+    any additional undocumented convention choice.
+\end{enumerate}
+
+\subsection{Engineering Interpretation}
+
+SP-G0 is deliberately treated as an engineering gate rather than as a
+documentation exercise.
+
+An array-processing implementation can produce numerically plausible results
+while still being physically inconsistent because of a sign convention,
+angle-reference convention, indexing convention, conjugation error, or frame
+ordering mismatch.
+
+Freezing these definitions before numerical optimization provides a controlled
+reference against which later fixed-point and FPGA discrepancies can be
+localized.
+
+\subsection{Gate Status}
+
+\textbf{Status: ACTIVE.}
+
+Several high-level baseline properties are already frozen, but the detailed
+array, steering, deterministic-case, and data-ordering conventions still
+require audit against the authoritative existing implementation.
+
+SP-G1 shall not begin until SP-G0 reaches PASS.
