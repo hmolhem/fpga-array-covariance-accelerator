@@ -430,8 +430,7 @@ Generated HLS project and solution directories remain ignored by Git.
 
 ---
 
-## Vivado Implementation Source Ownership
-
+## 9. `vivado/`
 ## Purpose
 
 The `vivado/` directory owns reproducible source-like assets required to
@@ -479,8 +478,7 @@ This closes the repository ownership gap between HLS and PYNQ board
 integration.
 
 ---
-# 9. `pynq/`
-
+## 10. `pynq/`
 ### Purpose
 
 The `pynq/` directory contains processor-side PYNQ integration code.
@@ -523,7 +521,7 @@ Possible responsibilities:
 
 ---
 
-## 10. `tests/`
+## 11. `tests/`
 
 ### Purpose
 
@@ -582,7 +580,7 @@ Integration tests help localize failures to the correct engineering layer.
 
 ---
 
-## 11. `verification/`
+## 12. `verification/`
 
 ### Purpose
 
@@ -659,7 +657,7 @@ A verification record should identify:
 
 ---
 
-## 12. `results/`
+## 13. `results/`
 
 ### Purpose
 
@@ -705,7 +703,7 @@ A final report figure should ideally have:
 
 ---
 
-## 13. `report/`
+## 14. `report/`
 
 ### Purpose
 
@@ -760,7 +758,7 @@ decision.
 
 ---
 
-## 14. `scripts/`
+## 15. `scripts/`
 
 ### Purpose
 
@@ -779,7 +777,7 @@ Automation should reduce manual ambiguity and improve reproducibility.
 
 ---
 
-## 15. Source, Evidence, and Result Separation
+## 16. Source, Evidence, and Result Separation
 
 Three concepts must remain distinct.
 
@@ -834,7 +832,7 @@ The relationship is:
 
 ---
 
-## 16. Traceability Model
+## 17. Traceability Model
 
 A major engineering claim should ideally be traceable through:
 
@@ -863,7 +861,7 @@ portfolio-grade engineering evidence.
 
 ---
 
-## 17. Generated Artifact Policy
+## 18. Generated Artifact Policy
 
 Routine generated artifacts shall not be committed.
 
@@ -892,7 +890,7 @@ The repository shall not become uncontrolled build storage.
 
 ---
 
-## 18. Repository Evolution Rule
+## 19. Repository Evolution Rule
 
 The repository structure may evolve when implementation evidence demonstrates a
 real engineering need.
@@ -913,7 +911,7 @@ Silent structural drift is not permitted.
 
 ---
 
-## 19. Final Repository Principle
+## 20. Final Repository Principle
 
 This repository is not intended to be merely a collection of source code.
 
@@ -952,5 +950,3 @@ It is intended to preserve the complete engineering chain:
     Reproducible Release
 
 That chain defines the organizational standard for this project.
-
-

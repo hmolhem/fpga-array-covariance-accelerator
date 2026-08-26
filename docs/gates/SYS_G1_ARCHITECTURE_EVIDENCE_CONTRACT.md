@@ -216,7 +216,7 @@ SYS-G1 requires repository ownership for the following layers.
 | HLS source | `hls/src/` | DEFINED |
 | HLS testbench | `hls/tb/` | DEFINED |
 | HLS automation | `hls/scripts/` | DEFINED |
-| Vivado implementation source | dedicated controlled location required | OPEN |
+| Vivado implementation source | `vivado/` | DEFINED |
 | PYNQ notebooks | `pynq/notebooks/` | DEFINED |
 | PYNQ reusable code | `pynq/scripts/` | DEFINED |
 | Unit tests | `tests/unit/` | DEFINED |
@@ -452,7 +452,7 @@ passing.
 
 ---
 
-## 12. Open Findings
+## 12. Closure Findings
 
 ### SYS1-F01 — Missing Vivado Source Location
 
@@ -466,8 +466,8 @@ Observation:
 The approved project includes Vivado implementation, implemented timing,
 resource utilization, AXI integration, and overlay construction.
 
-The current repository structure does not define a dedicated tracked location
-for reproducible Vivado implementation assets.
+At the initial SYS-G1 audit, the repository structure did not define a dedicated
+tracked location for reproducible Vivado implementation assets.
 
 Required resolution:
 
@@ -591,5 +591,3 @@ No downstream engineering gate is implicitly accepted by this decision.
 `SP-G0` remains `ACTIVE`.
 
 `SP-G1` remains `PENDING`.
-
-
