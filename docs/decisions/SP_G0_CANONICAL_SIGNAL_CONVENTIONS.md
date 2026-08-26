@@ -1,7 +1,7 @@
 ﻿# SP-G0 — Canonical Signal and Array Convention Decisions
 
 **Related Gate:** SP-G0
-**Decision Status:** ACCEPTED FOR SP-G0 CLOSURE AUDIT
+**Decision Status:** ACCEPTED - AUTHORITATIVE
 
 ## 1. Purpose
 
@@ -336,9 +336,11 @@ Canonical project decision:
 
 ## 13. Engineering Consequence
 
-After these decisions are accepted by SP-G0, SP-G1 shall not choose a new
-geometry, steering sign, angle reference, phase reference, mean-treatment
-rule, or random-generation policy.
+SP-G0 has accepted these decisions as the authoritative signal-processing
+contract.
+
+SP-G1 shall not choose a new geometry, steering sign, angle reference, phase
+reference, mean-treatment rule, or random-generation policy.
 
 SP-G1 shall implement and verify the frozen contract.
 

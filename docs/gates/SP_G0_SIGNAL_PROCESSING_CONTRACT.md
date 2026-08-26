@@ -3,7 +3,7 @@
 **Gate:** SP-G0
 **Status:** PASS
 **Parent system gates:** SYS-G0 PASS, SYS-G1 PASS
-**Downstream dependency:** SP-G1 shall remain PENDING until this gate passes.
+**Downstream state:** SP-G1 remains PENDING until this SP-G0 closure is integrated into main.
 
 ---
 
@@ -333,10 +333,9 @@ negative-sign form under lambda/2 spacing and first-sensor phase reference.
 Therefore the existence of the historical positive-sign implementation is a
 real convention conflict.
 
-SP-G0 shall resolve this conflict explicitly.
+SP-G0 resolved this conflict explicitly by adopting the canonical negative-sign receive steering convention.
 
-It shall not be silently hidden or treated as though all predecessor software
-used one convention.
+The historical conflict remains explicitly documented rather than being hidden or treated as though all predecessor software used one convention.
 
 ---
 
@@ -467,6 +466,7 @@ verification record.
 Status:
 
     RESOLVED
+
 ## 14. Acceptance Criteria
 
 SP-G0 may reach PASS only when:
@@ -488,7 +488,7 @@ SP-G0 may reach PASS only when:
 
 ## 15. Evidence Produced
 
-Current SP-G0 evidence includes:
+SP-G0 closure evidence includes:
 
 - predecessor HLS source audit;
 - predecessor deterministic-vector audit;
@@ -496,9 +496,9 @@ Current SP-G0 evidence includes:
 - mean-treatment audit;
 - cross-project steering-convention comparison;
 - derived deterministic-vector consistency check;
-- explicit list of unresolved contract decisions.
+- explicit resolution of the identified contract decisions.
 
-Additional evidence shall be added before gate closure.
+The required closure evidence is complete and traceably recorded in the SP-G0 gate, decision, acceptance-audit, report, registry, and handoff records.
 
 ---
 

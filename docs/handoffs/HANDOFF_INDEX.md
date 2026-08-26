@@ -46,13 +46,7 @@ Preserves the master A-to-Z engineering architecture of the project, including:
 
 Current continuation sequence:
 
-    Complete final SP-G0 consistency audit
-        |
-        v
-    Commit focused SP-G0 closure package
-        |
-        v
-    Open and review PR #3
+    Complete final review of PR #3
         |
         v
     Merge SP-G0 Signal-Processing Contract Closure
@@ -61,12 +55,15 @@ Current continuation sequence:
     Verify clean main / origin-main synchronization
         |
         v
+    Delete the completed SP-G0 branch when appropriate
+        |
+        v
     Create focused SP-G1 branch
         |
         v
     Begin SP-G1 — Array Signal and Snapshot Model
----
 
+---
 ## Handoff Rule
 
 When project state changes:

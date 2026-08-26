@@ -505,11 +505,11 @@ Large PRs containing unrelated gates shall be avoided.
 
 ## 18. Current Repository State
 
-At the SP-G0 closure checkpoint:
+At the final PR #3 review checkpoint:
 
 - PR #1 — repository foundation and governance — is merged;
 - PR #2 — SYS-G1 architecture / evidence contract closure — is merged;
-- PR #3 is the focused SP-G0 signal-processing contract closure;
+- PR #3 is open and contains the focused SP-G0 signal-processing contract closure;
 - the active PR #3 branch is
   `docs/sp-g0-signal-processing-contract`;
 - SYS-G0 is `PASS`;
@@ -520,6 +520,8 @@ At the SP-G0 closure checkpoint:
 - the canonical signal-processing conventions are frozen;
 - report alignment passed;
 - the complete LaTeX smoke build passed;
+- SP-G0 provenance closure is complete;
+- SP-G0 provenance closure is complete;
 - no SP-G1 implementation is included in PR #3.
 
 The SP-G0 closure package freezes the authoritative baseline for:
@@ -550,13 +552,7 @@ Do not begin SP-G1 inside PR #3.
 
 The permitted continuation sequence is:
 
-    Complete final SP-G0 consistency audit
-        |
-        v
-    Commit focused SP-G0 closure package
-        |
-        v
-    Open and review PR #3
+    Complete final review of PR #3
         |
         v
     Merge SP-G0 closure into main
@@ -565,12 +561,15 @@ The permitted continuation sequence is:
     Verify clean main / origin-main synchronization
         |
         v
+    Delete the completed SP-G0 branch when appropriate
+        |
+        v
     Create focused SP-G1 development branch
         |
         v
     Begin SP-G1 — Array Signal and Snapshot Model
 
-SP-G1 shall consume the SP-G0 contract.
+SP-G1 shall consume the frozen SP-G0 contract.
 
 SP-G1 shall not redefine the frozen geometry, steering, indexing, covariance,
 deterministic-case, random-regression, or logical-frame conventions unless a
